@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """
-create a method that returns the list of ships that can hold a given number of passengers
+create a method that returns the list of ships
+that can hold a given number of passengers
 """
 
 import requests
 
 
 def availableShips(passengerCount):
+    """Returns a list of ships"""
     url = 'https://swapi-api.alx-tools.com/api/starships/'
 
     res = requests.get(url)
@@ -15,7 +17,7 @@ def availableShips(passengerCount):
     while res.status_code == 200:
         res = res.json()
         for ship in res['results']:
-            passengers = ship['passengers']
+            passengers = ship['passengers'].replace(',', '')
             try:
                 if int(passengers) >= passengerCount:
                     output.append(ship['name'])
@@ -28,4 +30,3 @@ def availableShips(passengerCount):
             break
 
     return output
-
